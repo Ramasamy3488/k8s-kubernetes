@@ -1,5 +1,6 @@
 kubectl apply -f 1.emptydirdisk.yaml
 
+in the one of the node server,
 cd /var/lib/kubelet/pods
 
 kubectl get pod
@@ -9,3 +10,17 @@ kubectl get pods multi-container-pod -o yaml | grep uid
 cd /var/lib/kubelet/pods/<uid>
 
 ls
+
+cd volumes
+
+cd <emptydir>
+
+cd <name of the our emptydir>
+
+ls
+
+temproary storage, once container recreated new uid will be created and data will be deleted.
+
+kubectl exec -it <podname> -- sh
+
+cat /var/lib/index.html
