@@ -24,3 +24,10 @@ temproary storage, once container recreated new uid will be created and data wil
 kubectl exec -it <podname> -- sh
 
 cat /var/lib/index.html
+
+kubectl exec -it multi-container-pod -- df -h
+
+kubectl get pod multi-container-pod -o jsonpath="{.spec.containers[*].name}"
+
+kubectl exec -it <multicontainepodname> -c <containername> -- df -h
+
