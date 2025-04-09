@@ -1,0 +1,98 @@
+kubectl apply -f 1.emptydirdisk.yaml
+
+in the one of the node server,
+cd /var/lib/kubelet/pods
+
+kubectl get pod
+
+kubectl get pods multi-container-pod -o yaml | grep uid
+
+cd /var/lib/kubelet/pods/<uid>
+
+ls
+
+cd volumes
+
+cd <emptydir>
+
+cd <name of the our emptydir>
+
+ls
+
+temproary storage, once container recreated new uid will be created and data will be deleted.
+
+kubectl exec -it <podname> -- sh
+
+cat /var/lib/index.html
+
+kubectl exec -it multi-container-pod -- df -h
+
+kubectl get pod multi-container-pod -o jsonpath="{.spec.containers[*].name}"
+
+kubectl exec -it <multicontainepodname> -c <containername> -- df -h
+
+============================================================================
+
+kubectl apply -f 2.emptydir.yaml
+
+in server,
+
+cd /var/lib/kubelet/pods/<uid>
+
+cd volumes
+
+cd <emptydir>
+
+kubectl get pods multi-container-pod -o yaml | grep uid
+
+cd <uid>
+
+mount | grep empty-dir
+
+df -h | grep -i temps
+
+==========================================================================
+Persistent Volume:
+
+data will be retrive.
+
+kubectl apply -f 3.hostpath.yaml
+
+ volumes:
+  - name: shared-date-logs
+    hostPath:
+      path: /data/foo
+      type: Directory         # directory /data/foo must be exist.
+  
+---------------------------
+
+  volumes:
+  - name: shared-date-logs
+    hostPath:
+      path: /data/foo
+      type: DirectoryOrCreate    # directory /data/foo will be created.
+ 
+-------------------------------
+
+in server,
+
+cd /var/lib/kubelet/pods/<uid>
+
+cd volumes
+
+cd <emptydir>
+
+cat /data/foo/index.html
+
+----------------------------
+
+you can attach different volumes:
+
+ volumes:
+  - name: shared-date-logs
+    hostPath:
+      path: /data/foo
+      type: DirectoryOrCreate    # directory /data/foo will be created.
+  - name: shared-date-logs
+    emptyDir: {}
+
