@@ -1,0 +1,11 @@
+kubectl apply -f 1.emptydirdisk.yaml
+
+cd /var/lib/kubelet/pods
+
+kubectl get pod
+
+kubectl get pods multi-container-pod -o yaml | grep uid
+
+cd /var/lib/kubelet/pods/<uid>
+
+ls
